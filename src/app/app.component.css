@@ -1,0 +1,26 @@
+.toggler {
+    width: max-content;
+}
+
+.toggler-label {
+    margin-right: 10px;
+}
+
+.inputs{
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.formularios {
+    margin: 20px;
+}
+
+.acciones {
+    margin: 10px;
+}
+
+
+.btn-nuevo {
+    margin-bottom: 20px
+}
