@@ -7,7 +7,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+
+import { StoreModule } from "@ngrx/store";
+import { appReducers } from '../../store/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { EffectsArray } from 'src/app/store/effects';
 
 @NgModule({
   declarations: [
@@ -21,7 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     Ng2SearchPipeModule,
     ModalModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   providers: [BsModalService, ToastrService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

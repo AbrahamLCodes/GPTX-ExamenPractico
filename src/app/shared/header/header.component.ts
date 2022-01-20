@@ -17,9 +17,7 @@ export class HeaderComponent implements OnInit {
   }
   
   public toggleCollapse(): void {
-    this.isCollapsed = !this.isCollapsed;
-    console.log(this.isCollapsed);
-    
+    this.isCollapsed = !this.isCollapsed;    
   }
 
 }

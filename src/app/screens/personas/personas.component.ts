@@ -1,9 +1,13 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faEye, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import Persona from 'src/app/shared/models/persona';
+import { Persona } from 'src/app/shared/models/persona';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+// NgRx
+import { AppState } from '../../store/app.reducer';
+import { Store } from '@ngrx/store';
+import { persona, personaInsert, personaEdit, personaDelete } from "../../store/actions/main.actions"
 
 @Component({
   selector: 'app-personas',
@@ -34,10 +38,13 @@ export class PersonasComponent implements OnInit {
   //Modales de accion
   public modalRef: BsModalRef;
 
+  public personas: Persona[];
+
   constructor(
     fb: FormBuilder,
     private modalService: BsModalService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private store: Store<AppState>
   ) {
     this.formPersona = fb.group({
       id: [null],
@@ -47,6 +54,12 @@ export class PersonasComponent implements OnInit {
       direccion: [null, [Validators.required]],
       telefono: [null, [Validators.required]]
     });
+
+    store.select("mainReducer").subscribe((x => {
+      this.personas = x.personas;
+      
+    }));
+    store.dispatch(persona());        
   }
 
   public ngOnInit(): void {
@@ -120,7 +133,7 @@ export class PersonasComponent implements OnInit {
   }
 
   //Informacion para probar
-  public personas: Persona[] = [
+  public personas2: Persona[] = [
     {
       id: 1,
       nombre: "Abraham",

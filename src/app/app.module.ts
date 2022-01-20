@@ -10,6 +10,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 
+import { StoreModule } from "@ngrx/store";
+import { EffectsModule } from '@ngrx/effects';
+import { EffectsArray } from 'src/app/store/effects';
+import { HttpClientModule } from '@angular/common/http';
+import { appReducers } from './store/app.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +29,11 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     AppRoutingModule,
     BrowserAnimationsModule,
     FontAwesomeModule,
-    CollapseModule
+    CollapseModule,   
+    HttpClientModule,
+    EffectsModule.forRoot(EffectsArray),
+    StoreModule.forRoot(appReducers),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
