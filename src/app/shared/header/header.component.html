@@ -1,1 +1,27 @@
-<p>header works!</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img class="logo" src="../../../assets/images/profileultimate.png" alt="Logo..." />
+            <h4>Abraham Luna Cázares</h4>
+        </a>
+        
+        <button
+        class="navbar-toggler"
+        type="button"
+        (click)="toggleCollapse()"
+        aria-expanded="false">
+        <fa-icon style="color:white;" [icon]="faBars"></fa-icon>
+        </button>
+        
+        <div [collapse]="isCollapsed" [isAnimated]="true" class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                <a class="nav-link" routerLink="personas">Examen</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" routerLink="contenido">Instrucciones</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+  </nav>

@@ -1,0 +1,47 @@
+nav a.nav-link {
+    font-weight: 300;
+    letter-spacing: 0.0375px;
+    cursor: pointer;
+}
+
+nav ul li {
+    text-transform: uppercase;
+}
+
+.navbar-nav>li>a {
+    margin-right: 0.75rem;
+    margin-left: 00.75rem;
+    color: white !important;
+    border-top: 0.1875rem solid var(--primary-dark);
+}
+
+.logo {
+    width: 5.25rem;
+    border-radius: 50%;
+    margin: auto;
+}
+
+.navbar-brand {
+    max-width: 17.25rem !important;
+    padding: 0 !important;
+    height: 8rem !important;
+}
+
+.navbar-brand h4 {
+    color: whitesmoke !important;
+    font-weight: normal !important;
+    padding-top: 0 !important;
+}
+
+.navbar-nav>li>a.active,
+.navbar-nav>li>a.active:focus {
+    border-top: 0.1875rem solid var(--primary-orange);
+}
+
+.navbar-nav>li>a:hover {
+    border-top: 0.1875rem solid var(--primary-orange);
+}
+
+.language-flag {
+    width: 3rem;
+}
