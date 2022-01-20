@@ -19,6 +19,7 @@ export class ApiService {
   public getPersonas() {
     return this.http.get(`${environment.apiurl}/personas`, { headers: this.generalHeader }).pipe(
       map((data: Persona[]) => {
+        console.log("Personas", data);
         return data;
       })
     );
@@ -39,7 +40,8 @@ export class ApiService {
   }
 
   public updatePersona(id: number, nombre: string, apaterno: string, amaterno: string, direccion: string, telefono: string) {
-    return this.http.put(`${environment.apiurl}/persona?id=${id}`, {
+    return this.http.put(`${environment.apiurl}/persona`, {
+      id,
       nombre,
       apaterno,
       amaterno,
@@ -53,7 +55,7 @@ export class ApiService {
   }
 
   public deletePersona(id: number) {
-    return this.http.delete(`${environment.apiurl}/persona?=${id}`).pipe(
+    return this.http.delete(`${environment.apiurl}/persona?id=${id}`, { headers: this.generalHeader }).pipe(
       map((data: Persona) => {
         return data;
       })

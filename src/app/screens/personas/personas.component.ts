@@ -57,9 +57,8 @@ export class PersonasComponent implements OnInit {
 
     store.select("mainReducer").subscribe((x => {
       this.personas = x.personas;
-      
     }));
-    store.dispatch(persona());        
+    store.dispatch(persona());
   }
 
   public ngOnInit(): void {
@@ -81,17 +80,10 @@ export class PersonasComponent implements OnInit {
 
   public updatePersona(): void {
     this.formPersona.reset();
+    this.formPersona.patchValue(this.personaSel);
+
     this.nuevo = false;
     this.editar = true;
-
-    this.formPersona.patchValue({
-      id: this.personaSel.id,
-      nombre: this.personaSel.nombre,
-      apaterno: this.personaSel.apaterno,
-      amaterno: this.personaSel.amaterno,
-      direccion: this.personaSel.direccion,
-      telefono: this.personaSel.telefono
-    });
 
     if (this.modalRef) { //Por si el modal ha sido abierto
       this.cerrarModal();
@@ -99,25 +91,27 @@ export class PersonasComponent implements OnInit {
   }
 
   public submitPersona(): void {
+    this.formPersona.value.telefo += "";
     if (this.editar) {
-      const indexS = this.personas.indexOf(this.personaSel);
-      this.personas[indexS] = this.formPersona.value;
+      this.store.dispatch(personaEdit(this.formPersona.value));
       this.toastr.success("Persona editada correctamente", "Operación exitosa");
     } else {
       this.formPersona.patchValue({ id: Math.random() });
-      this.personas.push(this.formPersona.value);
+      this.store.dispatch(personaInsert(this.formPersona.value));
       this.toastr.success("Persona creada correctamente", "Operación exitosa");
     }
     this.resetForm();
   }
 
   public mostrarModal(template: TemplateRef<any>) {
+    if (this.modalRef) { //Por si el modal ha sido abierto
+      this.cerrarModal();
+    }
     this.modalRef = this.modalService.show(template);
   }
 
   public deleteP(): void {
-    const index = this.personas.indexOf(this.personaSel);
-    this.personas.splice(index, 1);
+    this.store.dispatch(personaDelete({ id: this.personaSel.id }));
     this.toastr.success("Persona eliminada correctamente", "Operación exitosa");
     this.cerrarModal();
   }
@@ -131,33 +125,5 @@ export class PersonasComponent implements OnInit {
     this.editar = false;
     this.formPersona.reset();
   }
-
-  //Informacion para probar
-  public personas2: Persona[] = [
-    {
-      id: 1,
-      nombre: "Abraham",
-      apaterno: "Luna",
-      amaterno: "Cazares",
-      direccion: "Heroismo 2227",
-      telefono: "6145996026"
-    },
-    {
-      id: 2,
-      nombre: "Mario",
-      apaterno: "Tejada",
-      amaterno: "Morales",
-      direccion: "Washington 2231",
-      telefono: "614223234"
-    },
-    {
-      id: 2,
-      nombre: "Nevin Adair",
-      apaterno: "Almanza",
-      amaterno: "Ortiz",
-      direccion: "Cantera 1231x",
-      telefono: "6143112231"
-    }
-  ]
 
 }

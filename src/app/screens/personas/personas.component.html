@@ -7,7 +7,7 @@
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Introduce la información de la persona {{ nuevo ? "a registrar" : "a editar"}}</label>
                 <div class="col-md-9">
-                    <input formControlName="nombre" type="text" class="form-control inputs" placeholder="Nombre">
+                    <input formControlName="nombre" type="text" class="form-control inputs" placeholder="Nombre(s)">
                     <input formControlName="apaterno" type="text" class="form-control inputs" placeholder="Apellido Paterno">
                     <input formControlName="amaterno" type="text" class="form-control inputs" placeholder="Apellido Materno">
                     <input formControlName="direccion" type="text" class="form-control inputs" placeholder="Dirección">
@@ -30,7 +30,7 @@
 
     <div class="card-body">
         <form class="form-horizontal">
-            <button class="btn btn-success btn-nuevo" (click)="nuevo = true;">Crear nuevo</button>
+            <button class="btn btn-success btn-nuevo" (click)="crearPersona()">Crear nuevo</button>
             <div class="form-group row">
                 <div class="col-md-9">
                     <input [(ngModel)]="buscadorPersona" [ngModelOptions]="{standalone: true}" type="text" class="form-control" placeholder="Buscar persona por Nombre, Apellido, etc...">
@@ -41,7 +41,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Nombre</th>
+                    <th>Nombre(s)</th>
                     <th>A. Paterno</th>
                     <th>A. Materno</th>
                     <th>Dirección</th>
@@ -50,16 +50,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let persona of personas2 | filter: buscadorPersona">
+                <tr *ngFor="let persona of personas | filter: buscadorPersona">
                     <td>{{ persona.nombre }}</td>
                     <td>{{ persona.apaterno }}</td>
                     <td>{{ persona.amaterno }}</td>
-                    <td>{{ persona.telefono }}</td>
+                    <td>{{ persona.direccion }}</td>
                     <td>{{ persona.telefono }}</td>
                     <td>
                         <div class="d-flex">
                             <fa-icon (click)="personaSel = persona; mostrarModal(modalInfo)" class="accion" [icon]="faEye"></fa-icon>
-                            <fa-icon (click)="updatePersona(); personaSel = persona;" class="accion" [icon]="faEdit"></fa-icon>
+                            <fa-icon (click)="personaSel = persona; updatePersona();" class="accion" [icon]="faEdit"></fa-icon>
                             <fa-icon (click)=" personaSel = persona; mostrarModal(templateModal)" class="accion" [icon]="faTrash"></fa-icon>
                         </div>
                     </td>
@@ -108,7 +108,7 @@
     </div>
     <div class="modal-footer d-flex justify-content-between">
         <div class="d-flex">
-            <button (click)="deleteP()" type="button" class="btn btn-danger btn-accion-form">Eliminar</button>
+            <button (click)="mostrarModal(templateModal)"  type="button" class="btn btn-danger btn-accion-form">Eliminar</button>
             <button (click)="updatePersona()" type="button" class="btn btn-info btn-accion-form">Editar</button>
         </div>
         <button (click)="cerrarModal()" type="button" class="btn btn-default">Cerrar</button>

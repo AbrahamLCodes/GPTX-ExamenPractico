@@ -31,7 +31,7 @@ export class MainEffects {
     personaInsert = createEffect(() => {
         return this.actions.pipe(
             ofType(main.personaInsert),
-            switchMap(({ nombre, apaterno, amaterno, telefono, direccion }) => this.api.insertPersona(nombre, apaterno, amaterno, telefono, direccion).pipe(
+            switchMap(({ nombre, apaterno, amaterno, direccion, telefono }) => this.api.insertPersona(nombre, apaterno, amaterno, direccion, telefono).pipe(
                 map((persona) => {
                     this.store.dispatch(main.persona());
                     return main.personaInsertSucces({ persona });
@@ -45,7 +45,7 @@ export class MainEffects {
     personaEdit = createEffect(() => {
         return this.actions.pipe(
             ofType(main.personaEdit),
-            switchMap(({ id, nombre, amaterno, apaterno, telefono, direccion }) => this.api.updatePersona(id, nombre, amaterno, apaterno, telefono, direccion).pipe(
+            switchMap(({ id, nombre, apaterno, amaterno, direccion, telefono }) => this.api.updatePersona(id, nombre, apaterno, amaterno, direccion, telefono).pipe(
                 map((persona) => {
                     this.store.dispatch(main.persona());
                     return main.personaEditSucces({ persona });
