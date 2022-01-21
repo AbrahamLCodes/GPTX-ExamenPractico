@@ -38,7 +38,7 @@
             </div>
         </form>
 
-        <table class="table">
+        <table class="table table-sm">
             <thead>
                 <tr>
                     <th>Nombre(s)</th>
@@ -46,7 +46,7 @@
                     <th>A. Materno</th>
                     <th>Dirección</th>
                     <th>Teléfono</th>
-                    <th>Acciones</th>
+                    <th style="text-align: center;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,10 +57,16 @@
                     <td>{{ persona.direccion }}</td>
                     <td>{{ persona.telefono }}</td>
                     <td>
-                        <div class="d-flex">
-                            <fa-icon (click)="personaSel = persona; mostrarModal(modalInfo)" class="accion" [icon]="faEye"></fa-icon>
-                            <fa-icon (click)="personaSel = persona; updatePersona();" class="accion" [icon]="faEdit"></fa-icon>
-                            <fa-icon (click)=" personaSel = persona; mostrarModal(templateModal)" class="accion" [icon]="faTrash"></fa-icon>
+                        <div class="d-flex justify-content-center">
+                            <button (click)="personaSel = persona; mostrarModal(modalInfo)" class="btn" style="background-color:transparent">
+                                <fa-icon class="accion" [icon]="faEye"></fa-icon>
+                            </button>
+                            <button (click)="personaSel = persona; updatePersona();" class="btn" style="background-color:transparent">
+                                <fa-icon class="accion" [icon]="faEdit"></fa-icon>
+                            </button>
+                            <button (click)=" personaSel = persona; mostrarModal(templateModal)" class="btn" style="background-color:transparent">
+                                <fa-icon class="accion" [icon]="faTrash"></fa-icon>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -109,9 +115,8 @@
     <div class="modal-footer d-flex justify-content-between">
         <div class="d-flex">
             <button (click)="mostrarModal(templateModal)"  type="button" class="btn btn-danger btn-accion-form">Eliminar</button>
-            <button (click)="updatePersona()" type="button" class="btn btn-info btn-accion-form">Editar</button>
+            <button (click)="updatePersona()" type="button" class="btn btn-info btn-accion-form modal-btn-txt">Editar</button>
         </div>
         <button (click)="cerrarModal()" type="button" class="btn btn-default">Cerrar</button>
-        
     </div>
 </ng-template>

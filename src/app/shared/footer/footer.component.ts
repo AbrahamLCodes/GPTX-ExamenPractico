@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faGooglePay, faGithub, faInstagram } from "@fortawesome/free-brands-svg-icons"
+import { faGooglePlay, faGithub, faInstagram } from "@fortawesome/free-brands-svg-icons"
 
 @Component({
   selector: 'app-footer',
@@ -8,7 +8,7 @@ import { faGooglePay, faGithub, faInstagram } from "@fortawesome/free-brands-svg
 })
 export class FooterComponent implements OnInit {
 
-  public faGooglePlay = faGooglePay;
+  public faGooglePlay = faGooglePlay;
   public faGithub = faGithub;
   public faInstagram = faInstagram;
 

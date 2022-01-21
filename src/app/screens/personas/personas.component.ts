@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faEye, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Persona } from 'src/app/shared/models/persona';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { ToastrService } from 'ngx-toastr';
 // NgRx
 import { AppState } from '../../store/app.reducer';
 import { Store } from '@ngrx/store';
@@ -15,7 +14,6 @@ import { persona, personaInsert, personaEdit, personaDelete } from "../../store/
   styleUrls: ['./personas.component.css']
 })
 export class PersonasComponent implements OnInit {
-
 
   // Font Awesome icons
   public faEye = faEye;
@@ -43,7 +41,6 @@ export class PersonasComponent implements OnInit {
   constructor(
     fb: FormBuilder,
     private modalService: BsModalService,
-    private toastr: ToastrService,
     private store: Store<AppState>
   ) {
     this.formPersona = fb.group({
@@ -68,10 +65,6 @@ export class PersonasComponent implements OnInit {
     this.nuevo = true;
   }
 
-  public async read(): Promise<any> {
-
-  }
-
   public crearPersona(): void {
     this.formPersona.reset();
     this.nuevo = true;
@@ -94,16 +87,14 @@ export class PersonasComponent implements OnInit {
     this.formPersona.value.telefo += "";
     if (this.editar) {
       this.store.dispatch(personaEdit(this.formPersona.value));
-      this.toastr.success("Persona editada correctamente", "Operación exitosa");
     } else {
       this.formPersona.patchValue({ id: Math.random() });
       this.store.dispatch(personaInsert(this.formPersona.value));
-      this.toastr.success("Persona creada correctamente", "Operación exitosa");
     }
     this.resetForm();
   }
 
-  public mostrarModal(template: TemplateRef<any>) {
+  public mostrarModal(template: TemplateRef<any>): void {
     if (this.modalRef) { //Por si el modal ha sido abierto
       this.cerrarModal();
     }
@@ -112,7 +103,6 @@ export class PersonasComponent implements OnInit {
 
   public deleteP(): void {
     this.store.dispatch(personaDelete({ id: this.personaSel.id }));
-    this.toastr.success("Persona eliminada correctamente", "Operación exitosa");
     this.cerrarModal();
   }
 

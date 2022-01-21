@@ -17,7 +17,7 @@
 }
 
 .accion {
-    margin: 10px;
+    margin: 0px;
 }
 
 
@@ -31,4 +31,8 @@
 
 .info {
     margin-left: 10px;
+}
+
+.modal-btn-txt{
+    color: white;
 }

@@ -6,7 +6,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -20,9 +19,8 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     ReactiveFormsModule,
     Ng2SearchPipeModule,
     ModalModule,
-    ToastrModule.forRoot(),
   ],
-  providers: [BsModalService, ToastrService],
+  providers: [BsModalService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PersonasModule { }

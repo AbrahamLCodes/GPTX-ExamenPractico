@@ -1,3 +1,7 @@
+.general-app{
+    min-width: 615px;
+}
+
 .toggler {
     width: max-content;
 }
@@ -23,4 +27,8 @@
 
 .btn-nuevo {
     margin-bottom: 20px
+}
+
+.page-content {
+    min-height: 60vh;
 }

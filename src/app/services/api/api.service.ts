@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Persona } from "../../shared/models/persona"
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,13 @@ export class ApiService {
   private generalHeader = new HttpHeaders().append('Content-Type', 'application/json');
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private toastr: ToastrService
   ) { }
 
   public getPersonas() {
     return this.http.get(`${environment.apiurl}/personas`, { headers: this.generalHeader }).pipe(
       map((data: Persona[]) => {
-        console.log("Personas", data);
         return data;
       })
     );
@@ -34,6 +35,7 @@ export class ApiService {
       telefono
     }).pipe(
       map((data: Persona) => {
+        this.toastr.success("Persona creada correctamente", "Operación exitosa");
         return data;
       })
     );
@@ -49,6 +51,7 @@ export class ApiService {
       telefono
     }).pipe(
       map((data: Persona) => {
+        this.toastr.success("Persona editada correctamente", "Operación exitosa");
         return data;
       })
     );
@@ -57,6 +60,7 @@ export class ApiService {
   public deletePersona(id: number) {
     return this.http.delete(`${environment.apiurl}/persona?id=${id}`, { headers: this.generalHeader }).pipe(
       map((data: Persona) => {
+        this.toastr.success("Persona eliminada correctamente", "Operación exitosa");
         return data;
       })
     );
