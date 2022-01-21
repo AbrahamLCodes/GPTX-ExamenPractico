@@ -3,7 +3,7 @@ import * as main from '../actions/main.actions';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../services/api/api.service';
+import { ApiService } from '../../shared/services/api/api.service';
 import { AppState } from '../app.reducer';
 import { Store } from '@ngrx/store';
 

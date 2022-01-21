@@ -6,18 +6,21 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SpinnerService } from '../services/spinner/spinner.service';
+import { finalize } from 'rxjs/operators';
 
 @Injectable()
 
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor() { }
+  constructor(
+    private spiner: SpinnerService
+  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    request = request.clone({
-      
-    });
-
-    return next.handle(request);
+    this.spiner.show();    
+    return next.handle(request).pipe(
+      finalize(() => this.spiner.hide())
+    );
   }
 }

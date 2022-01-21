@@ -4,8 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Apollo } from 'apollo-angular-boost';
 import { QueryPersona } from 'src/app/shared/models/querypersona';
 import { MutationPersona } from 'src/app/shared/models/mutationpersona';
-import { insertPersonaMutation, updatePersonaMutation, deletePersonaMutation } from "../../shared/gql/mutations"
-import { personas } from "../../shared/gql/queries";
+import { insertPersonaMutation, updatePersonaMutation, deletePersonaMutation } from "../../gql/mutations"
+import { personas } from "../../gql/queries";
 
 @Injectable({
   providedIn: 'root'
