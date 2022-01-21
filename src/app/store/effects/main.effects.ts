@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../../shared/services/api/api.service';
 import { AppState } from '../app.reducer';
 import { Store } from '@ngrx/store';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
     providedIn: "root"
@@ -14,7 +15,8 @@ export class MainEffects {
     constructor(
         private actions: Actions,
         private api: ApiService,
-        private store: Store<AppState>
+        private store: Store<AppState>,
+        private toastr: ToastrService
     ) { }
 
     personas = createEffect(() => {
@@ -23,6 +25,7 @@ export class MainEffects {
             switchMap(() => this.api.getPersonas().pipe(
                 map((personas) =>  main.personaSuccess({ personas })),
                 catchError((error) => {
+                    this.toastr.error("No se pudieron obtener los datos", "Operación fallida");
                     return of(main.personaFailure({ error }));
                 })
             )));
@@ -37,6 +40,7 @@ export class MainEffects {
                     return main.personaInsertSucces({ persona });
                 }),
                 catchError((error) => {
+                    this.toastr.error("No se pudo registrar a la persona", "Operación fallida");
                     return of(main.personaInsertFailure({ error }));
                 })
             )));
@@ -51,6 +55,7 @@ export class MainEffects {
                     return main.personaEditSucces({ persona });
                 }),
                 catchError((error) => {
+                    this.toastr.error("No se pudo editar a la persona", "Operación fallida");
                     return of(main.personaEditFailure({ error }));
                 })
             )));
@@ -61,11 +66,11 @@ export class MainEffects {
             ofType(main.personaDelete),
             switchMap(({ id }) => this.api.deletePersona(id).pipe(
                 map((persona) => {     
-                    console.log("Eliminando persona");
                     this.store.dispatch(main.persona());
                     return main.personaDeleteSuccess({ persona });
                 }),
                 catchError((error) => {
+                    this.toastr.error("No se pudo eliminar a la persona", "Operación fallida");
                     return of(main.personaDeleteFailure({ error }));
                 })
             )));

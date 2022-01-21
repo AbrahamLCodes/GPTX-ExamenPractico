@@ -7,17 +7,48 @@
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Introduce la información de la persona {{ nuevo ? "a registrar" : "a editar"}}</label>
                 <div class="col-md-9">
-                    <input formControlName="nombre" type="text" class="form-control inputs" placeholder="Nombre(s)">
-                    <input formControlName="apaterno" type="text" class="form-control inputs" placeholder="Apellido Paterno">
-                    <input formControlName="amaterno" type="text" class="form-control inputs" placeholder="Apellido Materno">
-                    <input formControlName="direccion" type="text" class="form-control inputs" placeholder="Dirección">
-                    <input formControlName="telefono" type="text" class="form-control inputs" placeholder="Teléfono">
+                    <p>Todos los campos son obligatorios</p>
+                    <div class="d-flex">
+                        <input formControlName="nombre" type="text" class="form-control inputs" placeholder="Nombre(s)">
+                        <span style="color: red;">*</span>
+                    </div>
+                    <div *ngIf="campoValido('nombre')" class="alert alert-danger form-danger" role="alert">
+                        {{ tipoError('nombre') }}
+                    </div>
+                    <div class="d-flex">
+                        <input formControlName="apaterno" type="text" class="form-control inputs" placeholder="Apellido Paterno">
+                        <span style="color: red;">*</span>
+                    </div>
+                    <div *ngIf="campoValido('apaterno')" class="alert alert-danger form-danger" role="alert">
+                        {{ tipoError('apaterno') }}
+                    </div>
+                    <div class="d-flex">
+                        <input formControlName="amaterno" type="text" class="form-control inputs" placeholder="Apellido Materno">
+                        <span style="color: red;">*</span>
+                    </div>
+                    <div *ngIf="campoValido('amaterno')" class="alert alert-danger form-danger" role="alert">
+                        {{ tipoError('amaterno') }}
+                    </div>
+                    <div class="d-flex">
+                        <input formControlName="direccion" type="text" class="form-control inputs" placeholder="Dirección">
+                        <span style="color: red;">*</span>
+                    </div>
+                    <div *ngIf="campoValido('direccion')" class="alert alert-danger form-danger" role="alert">
+                        {{ tipoError('direccion') }}
+                    </div>
+                    <div class="d-flex">
+                        <input formControlName="telefono" type="text" class="form-control inputs" placeholder="Teléfono (Max 10 caracteres)">
+                        <span style="color: red;">*</span>
+                    </div>
+                    <div *ngIf="campoValido('telefono')" class="alert alert-danger form-danger" role="alert">
+                        {{ tipoError('telefono') }}
+                    </div>
                 </div>
             </div>
         </form>
     </div>
     <div class="card-footer d-flex justify-content-end">
-        <button (click)="submitPersona()" class="btn btn-sm btn-success btn-accion-form"><i class="fa fa-dot-circle-o"></i>{{ nuevo ? "Registrar" : "Editar" }}</button>
+        <button *ngIf="formPersona.valid" (click)="submitPersona()" class="btn btn-sm btn-success btn-accion-form"><i class="fa fa-dot-circle-o"></i>{{ nuevo ? "Registrar" : "Editar" }}</button>
         <button (click)="resetForm()" class="btn btn-sm btn-danger btn-accion-form"><i class="fa fa-ban"></i> Cancelar</button>
     </div>
 </div>
@@ -31,14 +62,16 @@
     <div class="card-body">
         <form class="form-horizontal">
             <button class="btn btn-success btn-nuevo" (click)="crearPersona()">Crear nuevo</button>
-            <div class="form-group row">
+            <div *ngIf="personas.length > 0" class="form-group row">
                 <div class="col-md-9">
                     <input [(ngModel)]="buscadorPersona" [ngModelOptions]="{standalone: true}" type="text" class="form-control" placeholder="Buscar persona por Nombre, Apellido, etc...">
                 </div>
             </div>
         </form>
 
-        <table class="table table-sm">
+        <p *ngIf="personas.length < 1" class="sin-personas">No hay información para mostrar</p>
+
+        <table *ngIf="personas.length > 0" class="table table-sm">
             <thead>
                 <tr>
                     <th>Nombre(s)</th>
@@ -76,7 +109,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Eliminar -->
 <ng-template #templateModal>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Eliminar persona</h4>
@@ -90,7 +123,7 @@
     </div>
 </ng-template>
 
-<!-- Modal -->
+<!-- Modal Ver -->
 <ng-template #modalInfo>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Información de la persona</h4>

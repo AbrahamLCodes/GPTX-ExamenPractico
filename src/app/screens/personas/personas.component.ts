@@ -49,7 +49,7 @@ export class PersonasComponent implements OnInit {
       apaterno: [null, [Validators.required]],
       amaterno: [null, [Validators.required]],
       direccion: [null, [Validators.required]],
-      telefono: [null, [Validators.required]]
+      telefono: [null, [Validators.required, Validators.maxLength(10)]]
     });
 
     store.select("mainReducer").subscribe((x => {
@@ -84,14 +84,14 @@ export class PersonasComponent implements OnInit {
   }
 
   public submitPersona(): void {
-    this.formPersona.value.telefo += "";
-    if (this.editar) {
-      this.store.dispatch(personaEdit(this.formPersona.value));
-    } else {
-      this.formPersona.patchValue({ id: Math.random() });
-      this.store.dispatch(personaInsert(this.formPersona.value));
+    if (this.formPersona.valid) {
+      if (this.editar) {
+        this.store.dispatch(personaEdit(this.formPersona.value));
+      } else {
+        this.store.dispatch(personaInsert(this.formPersona.value));
+      }
+      this.resetForm();
     }
-    this.resetForm();
   }
 
   public mostrarModal(template: TemplateRef<any>): void {
@@ -116,4 +116,24 @@ export class PersonasComponent implements OnInit {
     this.formPersona.reset();
   }
 
+  get formPersonaControls(): any {
+    return this.formPersona.controls;
+  }
+
+  public campoValido(control: string): boolean {
+    return this.formPersona.controls[control].invalid
+      && (this.formPersona.controls[control].dirty
+        || this.formPersona.controls[control].touched)
+  }
+
+  public tipoError(control: string): string {
+    let error = "";
+    if (this.formPersona.controls[control].errors["required"]) {
+      error = "Campo obligatorio"
+    }
+    if (this.formPersona.controls[control].errors["maxlength"]) {
+      error = "Has sobrepasado el límite de caracteres"
+    }
+    return error;
+  }
 }
