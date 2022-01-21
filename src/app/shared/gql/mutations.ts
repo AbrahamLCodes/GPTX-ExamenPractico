@@ -14,7 +14,7 @@ export const insertPersonaMutation = gql`
 
   export const updatePersonaMutation = gql`
     mutation updatePersonaMutation($id: Int!, $nombre: String!, $apaterno: String!, $amaterno: String!, $direccion: String!, $telefono: String!){
-      createPersona(id: $id, nombre: $nombre, apaterno: $apaterno, amaterno: $amaterno, direccion: $direccion, telefono: $telefono){
+      updatePersona(id: $id, nombre: $nombre, apaterno: $apaterno, amaterno: $amaterno, direccion: $direccion, telefono: $telefono){
         id
         nombre
         apaterno

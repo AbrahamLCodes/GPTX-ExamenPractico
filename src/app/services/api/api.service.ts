@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { map, Subscription } from 'rxjs';
+import { map } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { Apollo, gql } from 'apollo-angular-boost';
+import { Apollo } from 'apollo-angular-boost';
 import { QueryPersona } from 'src/app/shared/models/querypersona';
 import { MutationPersona } from 'src/app/shared/models/mutationpersona';
 import { insertPersonaMutation, updatePersonaMutation, deletePersonaMutation } from "../../shared/gql/mutations"
@@ -12,9 +12,8 @@ import { personas } from "../../shared/gql/queries";
 })
 export class ApiService {
 
+  //Apollo-Client Requests
   private personasQuery = personas
-  private querySubscription: Subscription = null;
-
   private insertPersonaMutation = insertPersonaMutation;
   private updatePersonaMutation = updatePersonaMutation;
   private deletePersonaMutation = deletePersonaMutation;
@@ -29,8 +28,6 @@ export class ApiService {
       query: this.personasQuery
     }).valueChanges.pipe(
       map((data: QueryPersona) => {
-        console.log("Obteniendo personas");
-        console.log("DATA", data);
         return data.data.personas;
       })
     );
@@ -45,14 +42,14 @@ export class ApiService {
         amaterno,
         direccion,
         telefono
-      }
+      },
+      refetchQueries: [
+        { query: this.personasQuery }
+      ]
     }).pipe(
       map((data: any) => {
         this.toastr.success("Persona creada correctamente", "Operación exitosa");
         const persona = data.data.createPersona;
-        console.log("DATA", data);
-        console.log("PERSONA", persona);
-
         return persona;
       })
     );
@@ -68,13 +65,14 @@ export class ApiService {
         amaterno,
         direccion,
         telefono
-      }
+      },
+      refetchQueries: [
+        { query: this.personasQuery }
+      ]
     }).pipe(
       map((data: MutationPersona) => {
         this.toastr.success("Persona editada correctamente", "Operación exitosa");
-        this.toastr.success("Persona creada correctamente", "Operación exitosa");
         const persona = data.data.persona;
-        console.log("Persona editada", persona);
         return persona;
       })
     );
@@ -85,7 +83,10 @@ export class ApiService {
       mutation: this.deletePersonaMutation,
       variables: {
         id
-      }
+      },
+      refetchQueries: [
+        { query: this.personasQuery }
+      ]
     }).pipe(
       map((data: MutationPersona) => {
         this.toastr.success("Persona eliminada correctamente", "Operación exitosa");
