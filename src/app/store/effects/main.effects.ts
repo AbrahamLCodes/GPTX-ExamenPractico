@@ -17,11 +17,11 @@ export class MainEffects {
         private store: Store<AppState>
     ) { }
 
-    personas = createEffect(() => {        
+    personas = createEffect(() => {
         return this.actions.pipe(
             ofType(main.persona),
             switchMap(() => this.api.getPersonas().pipe(
-                map((personas) => main.personaSuccess({ personas })),
+                map((personas) =>  main.personaSuccess({ personas })),
                 catchError((error) => {
                     return of(main.personaFailure({ error }));
                 })
@@ -60,7 +60,8 @@ export class MainEffects {
         return this.actions.pipe(
             ofType(main.personaDelete),
             switchMap(({ id }) => this.api.deletePersona(id).pipe(
-                map((persona) => {
+                map((persona) => {     
+                    console.log("Eliminando persona");
                     this.store.dispatch(main.persona());
                     return main.personaDeleteSuccess({ persona });
                 }),

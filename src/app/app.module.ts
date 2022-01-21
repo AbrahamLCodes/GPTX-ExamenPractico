@@ -18,6 +18,10 @@ import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
+//GraphQL
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { GraphqlModule } from './shared/gql/graphql.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,14 +33,17 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     AppRoutingModule,
     BrowserAnimationsModule,
     FontAwesomeModule,
-    CollapseModule,   
+    CollapseModule,
     HttpClientModule,
+    GraphqlModule,
     EffectsModule.forRoot(EffectsArray),
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     ToastrModule.forRoot()
   ],
-  providers: [ToastrService],
+  providers: [
+    ToastrService
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
